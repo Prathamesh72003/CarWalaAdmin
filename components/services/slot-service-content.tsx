@@ -7,8 +7,7 @@ import { ServiceNameTab } from "@/components/services/service-name-tab"
 import { TimeSlotsTab } from "@/components/services/time-slots-tab"
 import { Button } from "@/components/ui/button"
 import { Calendar, Plus } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { AddTimeSlotDialog } from "./add-time-slot-dialog"
 
 interface SlotServiceContentProps {
   service: ServiceOption
@@ -55,16 +54,7 @@ export function SlotServiceContent({ service }: SlotServiceContentProps) {
 
         {/* Add New Time Slot button - only visible in time-slots tab */}
         {activeTab === "time-slots" && (
-          <div className="mb-4">
-            <Button
-              className="bg-red-100 hover:bg-red-200 text-red-800 border border-red-200"
-              variant="ghost"
-              onClick={handleAddNewTimeSlot}
-            >
-              <Plus className="h-5 w-5 mr-2" />
-              Add New Time Slot
-            </Button>
-          </div>
+          <AddTimeSlotDialog />
         )}
 
         <TabsContent value="service-name" className="mt-0">
