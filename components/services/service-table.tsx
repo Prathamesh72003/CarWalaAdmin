@@ -36,25 +36,14 @@ export function ServiceTable({ data, isOngoing }: ServiceTableProps) {
     setServices(services.filter((service) => service.id !== id));
   };
 
-  const [confirmedServices, setConfirmedServices] = useState<{
-    [key: string]: boolean;
-  }>({});
-
   const handleStaffAssignment = (id: string, staffName: string) => {
     setServices(
       services.map((service) =>
         service.id === id ? { ...service, assignedStaff: staffName } : service
       )
     );
-    setConfirmedServices((prev) => ({ ...prev, [id]: false })); // Reset confirmation
-  };
 
-  const handleConfirm = (id: string) => {
-    console.log(
-      "Confirming staff assignment:",
-      services.find((s) => s.id === id)?.assignedStaff
-    );
-    setConfirmedServices((prev) => ({ ...prev, [id]: true }));
+    // In a real app, this would call an API to update the
   };
 
   return (
@@ -110,10 +99,8 @@ export function ServiceTable({ data, isOngoing }: ServiceTableProps) {
                         <SelectTrigger
                           className={`w-32 cursor-pointer border-2 ${
                             service.assignedStaff
-                              ? confirmedServices[service.id]
-                                ? "bg-green-300 text-black"
-                                : "bg-red-300 text-black"
-                              : "bg-red-300"
+                              ? "bg-green-300 text-black"
+                              : "bg-red-300 text-black"
                           }`}
                         >
                           <SelectValue placeholder="Assign Staff">
@@ -147,20 +134,6 @@ export function ServiceTable({ data, isOngoing }: ServiceTableProps) {
                           </SelectItem>
                         </SelectContent>
                       </Select>
-
-                      {service.assignedStaff && (
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-8 w-8 text-green-600 hover:text-green-700 hover:bg-green-50"
-                          onClick={() => handleConfirm(service.id)}
-                        >
-                          <Check className="h-4 w-4" />
-                          <span className="sr-only">
-                            Confirm staff assignment
-                          </span>
-                        </Button>
-                      )}
                     </div>
                   ) : (
                     <span className="text-gray-700">

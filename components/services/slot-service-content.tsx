@@ -4,10 +4,10 @@ import { useState } from "react"
 import type { ServiceOption } from "@/components/dashboard/dashboard"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ServiceNameTab } from "@/components/services/service-name-tab"
-import { TimeSlotsTab } from "@/components/services/time-slots-tab"
+import TimeSlotsTab from "./time-slots-tab"
 import { Button } from "@/components/ui/button"
 import { Calendar, Plus } from "lucide-react"
-import { AddTimeSlotDialog } from "./add-time-slot-dialog"
+import { TimeSlot, TimeSlotDialog } from "./add-time-slot-dialog"
 
 interface SlotServiceContentProps {
   service: ServiceOption
@@ -17,9 +17,10 @@ export function SlotServiceContent({ service }: SlotServiceContentProps) {
   const [dateRange, setDateRange] = useState("17 April 2020 - 21 May 2020")
   const [activeTab, setActiveTab] = useState("service-name")
 
-  const handleAddNewTimeSlot = () => {
-    // In a real app, this would open a modal to add a new time slot
-    alert("Add new time slot functionality will be implemented in the future")
+  const handleSaveNewSlot = (date: Date, timeSlots: TimeSlot[]) => {
+    console.log("Adding new slots for date:", date)
+    console.log("Time slots:", timeSlots)
+    // Here you would typically save the data to your backend
   }
 
   return (
@@ -54,7 +55,7 @@ export function SlotServiceContent({ service }: SlotServiceContentProps) {
 
         {/* Add New Time Slot button - only visible in time-slots tab */}
         {activeTab === "time-slots" && (
-          <AddTimeSlotDialog />
+          <TimeSlotDialog mode="add" onSave={handleSaveNewSlot} />
         )}
 
         <TabsContent value="service-name" className="mt-0">
